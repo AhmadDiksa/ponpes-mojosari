@@ -5,7 +5,7 @@
             {{-- Logo & Nama Pesantren --}}
             <a href="{{ route('home') }}" class="flex items-center space-x-3">
                 {{-- Ganti dengan tag <img> untuk logo Anda --}}
-                <div class="h-10 w-10 bg-green-200 rounded-full"></div> 
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Ponpes Mojosari" class="h-10 w-auto">
                 <span class="text-xl font-bold text-green-800">Ponpes Mojosari</span>
             </a>
 

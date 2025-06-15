@@ -3,7 +3,7 @@
 @section('content')
 
 {{-- 1. Hero Section --}}
-<section class="relative h-[calc(100vh-80px)] bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('https://source.unsplash.com/1600x900/?islamic,mosque,architecture');">
+<section class="relative h-[calc(100vh-80px)] bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('{{ asset('images/hero-background.jpg') }}');">
     {{-- Overlay Gelap --}}
     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
     
@@ -32,7 +32,7 @@
     <div class="container mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right">
-                <img src="https://source.unsplash.com/800x600/?learning,islamic,student" alt="Santri Belajar" class="rounded-lg shadow-xl w-full">
+                <img src="{{ asset('images/santribelajar.jpg') }}" alt="Santri Belajar" class="rounded-lg shadow-xl w-full">
             </div>
             <div data-aos="fade-left">
                 <span class="text-green-600 font-semibold">Selamat Datang</span>
