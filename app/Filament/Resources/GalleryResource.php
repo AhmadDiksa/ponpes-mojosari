@@ -28,12 +28,12 @@ class GalleryResource extends Resource
     {
         return $form
             ->schema([
-                FileUpload::make('image_path')
-                    ->label('Upload Foto')
-                    ->image() // Memastikan hanya file gambar yang bisa diupload
-                    ->directory('gallery-photos') // Menyimpan file di 'storage/app/public/gallery-photos'
-                    ->required()
-                    ->columnSpanFull(),
+FileUpload::make('image_path')
+    ->label('Upload Foto')
+    // ->image() // Memastikan hanya file gambar yang bisa diupload (disabled temporarily for testing)
+    ->directory('gallery-photos') // Menyimpan file di 'storage/app/public/gallery-photos'
+    ->required()
+    ->columnSpanFull(),
                 TextInput::make('title')
                     ->label('Judul Foto')
                     ->required(),
