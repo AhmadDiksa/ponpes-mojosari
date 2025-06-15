@@ -15,6 +15,7 @@
                 <a href="{{ route('profil') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Profil</a>
                 <a href="{{ route('kegiatan') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Kegiatan</a>
                 <a href="{{ route('program') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Program</a>
+                <a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Galeri</a> 
                 <a href="{{ route('ppdb') }}" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-all duration-300 shadow">PPDB</a>
             </div>
 

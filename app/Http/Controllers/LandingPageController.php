@@ -6,6 +6,7 @@ use App\Models\JadwalKegiatan;
 use App\Models\PageContent;
 use App\Models\PpdbInfo;
 use App\Models\ProgramPendidikan;
+use App\Models\Gallery;
 
 class LandingPageController extends Controller
 {
@@ -48,5 +49,13 @@ class LandingPageController extends Controller
         // Ambil semua data PPDB
         $ppdbInfos = PpdbInfo::all()->groupBy('kategori');
         return view('ppdb', ['ppdbInfos' => $ppdbInfos]);
+    }
+
+    // Halaman Galeri
+      public function galeri()
+    {
+        // Ambil semua foto, urutkan dari yang terbaru
+        $photos = Gallery::latest()->get(); 
+        return view('galeri', compact('photos'));
     }
 }
