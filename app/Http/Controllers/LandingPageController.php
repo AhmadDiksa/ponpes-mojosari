@@ -7,6 +7,7 @@ use App\Models\PageContent;
 use App\Models\PpdbInfo;
 use App\Models\ProgramPendidikan;
 use App\Models\Gallery;
+use App\Models\Berita;
 
 class LandingPageController extends Controller
 {
@@ -80,5 +81,4 @@ class LandingPageController extends Controller
 
         return view('berita-show', compact('berita'));
     }
-}
 }
