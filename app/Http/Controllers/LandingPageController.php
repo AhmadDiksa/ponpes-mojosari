@@ -56,7 +56,7 @@ class LandingPageController extends Controller
     public function galeri()
     {
         // Ambil semua foto, urutkan dari yang terbaru
-        $photos = Gallery::latest()->get(); 
+        $photos = Gallery::latest()->paginate(12); 
         return view('galeri', compact('photos'));
     }
 

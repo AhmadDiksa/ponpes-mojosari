@@ -21,6 +21,9 @@
                     </div>
                 @endforeach
             </div>
+             <div class="mt-16">
+                {{ $photos->links() }}
+            </div>
         @else
             <div class="text-center py-16" data-aos="fade-up">
                 <p class="text-gray-500 text-lg">Belum ada foto di galeri.</p>
