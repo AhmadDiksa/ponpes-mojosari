@@ -14,7 +14,10 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Illuminate\Support\Str;
 
 class ProgramPendidikanResource extends Resource
 {
@@ -35,11 +38,20 @@ class ProgramPendidikanResource extends Resource
                         'ekstrakulikuler' => 'Ekstrakurikuler',
                     ])
                     ->required(),
+                    
                 TextInput::make('nama')
                     ->label('Nama Program/Pendidikan')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
                 Textarea::make('deskripsi')
                     ->label('Deskripsi Singkat (Opsional)'),
+
+                FileUpload::make('image')
+                    ->label('Gambar Program')
+                    ->image()
+                    ->directory('program-images'),
             ]);
     }
 
@@ -47,6 +59,8 @@ class ProgramPendidikanResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Gambar'),
                 TextColumn::make('kategori')
                     ->badge(),
                 TextColumn::make('nama')

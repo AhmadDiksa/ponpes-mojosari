@@ -63,7 +63,7 @@
             </div>
         </div>
     </footer>
- {{-- Fancybox JS --}}
+    {{-- Fancybox JS --}}
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
         // Inisialisasi Fancybox
@@ -73,5 +73,8 @@
             });
         });
     </script>
+
+    {{-- Alpine.js --}}
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

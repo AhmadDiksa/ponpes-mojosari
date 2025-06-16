@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="text-center mt-12">
-             <a href="{{ route('program') }}" class="inline-block bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105">
+             <a href="{{ route('program.hub') }}" class="inline-block bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105">
                 Lihat Semua Program
             </a>
         </div>

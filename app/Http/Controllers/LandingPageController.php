@@ -36,13 +36,63 @@ class LandingPageController extends Controller
     }
 
     // Halaman Program & Pendidikan
-    public function program()
+ // METHOD BARU: Halaman "hub" yang menampilkan link ke setiap kategori.
+    public function programHub()
     {
-        $programPesantren = ProgramPendidikan::where('kategori', 'program_pesantren')->get();
-        $ekstrakulikuler = ProgramPendidikan::where('kategori', 'ekstrakulikuler')->get();
-        $pendidikanFormal = ProgramPendidikan::where('kategori', 'pendidikan_formal')->get();
-        return view('program', compact('programPesantren', 'ekstrakulikuler', 'pendidikanFormal'));
+        // Kita bisa kirim data kategori ke view jika ingin membuatnya dinamis
+        $categories = [
+            'program-pesantren' => [
+                'title' => 'Program Unggulan Pesantren',
+                'description' => 'Program inti untuk pendalaman ilmu agama dan Al-Qur\'an.',
+                'image' => 'images/hub-pesantren.jpg' // Path ke gambar representatif
+            ],
+            'pendidikan-formal' => [
+                'title' => 'Pendidikan Formal',
+                'description' => 'Pendidikan berjenjang yang terintegrasi dengan kurikulum nasional.',
+                'image' => 'images/hub-formal.jpg'
+            ],
+            'ekstrakulikuler' => [
+                'title' => 'Ekstrakurikuler',
+                'description' => 'Kegiatan pengembangan bakat, minat, dan keterampilan santri.',
+                'image' => 'images/hub-ekstra.jpg'
+            ],
+        ];
+
+        return view('program-hub', compact('categories'));
     }
+
+    // METHOD BARU: Halaman yang menampilkan daftar program berdasarkan kategori.
+    public function programByCategory($category_slug)
+    {
+        // Konversi slug URL menjadi nama kategori di database
+        $kategori_map = [
+            'program-pesantren' => 'program_pesantren',
+            'pendidikan-formal' => 'pendidikan_formal',
+            'ekstrakulikuler' => 'ekstrakulikuler',
+        ];
+        
+        // Validasi slug kategori
+        if (!array_key_exists($category_slug, $kategori_map)) {
+            abort(404);
+        }
+
+        $db_kategori = $kategori_map[$category_slug];
+
+        // Ambil data program untuk kategori ini
+        $programs = ProgramPendidikan::where('kategori', $db_kategori)->get();
+        
+        // Ambil judul yang user-friendly
+        $categoryTitle = ucwords(str_replace('-', ' ', $category_slug));
+
+        return view('program-category', compact('programs', 'categoryTitle'));
+    }
+
+    // Halaman detail program (ini tidak berubah)
+    public function programShow(ProgramPendidikan $programPendidikan)
+    {
+        return view('program-show', ['program' => $programPendidikan]);
+    }
+
 
     // Halaman PPDB
     public function ppdb()

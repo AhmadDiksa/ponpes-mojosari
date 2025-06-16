@@ -47,7 +47,7 @@ class PonpesContentSeeder extends Seeder
                 "Mencetak generasi yang berjiwa nasionalisme, cerdas, berdikari, serta kreatif.",
                 "Mewujudkan para santri dan pelajar untuk mantap dalam IMTAQ (Iman dan Taqwa) yang luhur dalam akhlak, unggul meningkatkan prestasi, serta terampil memajukan teknologi.",
                 "Mewujudkan lembaga pendidikan dengan ilmu kejuruan yang berlandaskan akhlakul karimah. Sehingga mampu membentuk lulusan yang berkarakter unggul.",
-                "Terbentuknya generasi yang beriman, bertakwa, berilmu, berprestasi, serta berwawasan kebangsaan serta berakidah, dan"
+                "Terbentuknya generasi yang beriman, bertakwa, berilmu, berprestasi, serta berwawasan kebangsaan serta berakidah,"
             ])
         ]);
 
@@ -93,15 +93,51 @@ class PonpesContentSeeder extends Seeder
         // =================================================================
         // 3. MENGISI PROGRAM & PENDIDIKAN
         // =================================================================
-        ProgramPendidikan::create(['kategori' => 'program_pesantren', 'nama' => "TAHFIDZIL DAN TARTILIL QUR'AN"]);
-        ProgramPendidikan::create(['kategori' => 'program_pesantren', 'nama' => "MADRASAH DINIYAH"]);
-        ProgramPendidikan::create(['kategori' => 'ekstrakulikuler', 'nama' => 'Khot']);
-        ProgramPendidikan::create(['kategori' => 'ekstrakulikuler', 'nama' => "Qiro'ah"]);
-        ProgramPendidikan::create(['kategori' => 'ekstrakulikuler', 'nama' => "Pencak Silat Porsigal"]);
-        ProgramPendidikan::create(['kategori' => 'pendidikan_formal', 'nama' => 'Mts NU']);
-        ProgramPendidikan::create(['kategori' => 'pendidikan_formal', 'nama' => 'MA NU']);
-        ProgramPendidikan::create(['kategori' => 'pendidikan_formal', 'nama' => 'SMK Al Basthomi Mojosari']);
-        ProgramPendidikan::create(['kategori' => 'pendidikan_formal', 'nama' => 'ITM (Institut Teknologi Mojosari)']);
+        ProgramPendidikan::create([
+            'kategori' => 'program_pesantren',
+            'nama' => "TAHFIDZIL DAN TARTILIL QUR'AN",
+            'slug' => 'tahfidzil-dan-tartilil-quran'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'program_pesantren',
+            'nama' => "MADRASAH DINIYAH",
+            'slug' => 'madrasah-diniyah'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'ekstrakulikuler',
+            'nama' => 'Khot',
+            'slug' => 'khot'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'ekstrakulikuler',
+            'nama' => "Qiro'ah",
+            'slug' => 'qiroah'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'ekstrakulikuler',
+            'nama' => "Pencak Silat Porsigal",
+            'slug' => 'pencak-silat-porsigal'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'pendidikan_formal',
+            'nama' => 'Mts NU',
+            'slug' => 'mts-nu'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'pendidikan_formal',
+            'nama' => 'MA NU',
+            'slug' => 'ma-nu'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'pendidikan_formal',
+            'nama' => 'SMK Al Basthomi Mojosari',
+            'slug' => 'smk-al-basthomi-mojosari'
+        ]);
+        ProgramPendidikan::create([
+            'kategori' => 'pendidikan_formal',
+            'nama' => 'ITM (Institut Teknologi Mojosari)',
+            'slug' => 'itm-institut-teknologi-mojosari'
+        ]);
 
         
         // =================================================================
