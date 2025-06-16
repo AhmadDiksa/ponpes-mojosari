@@ -12,6 +12,7 @@
             {{-- Navigasi Desktop (Terlihat di layar medium ke atas) --}}
             <div class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Beranda</a>
+                <a href="{{ route('berita.index') }}" class="text-gray-600 hover:text-green-600 ...">Berita</a>
                 <a href="{{ route('profil') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Profil</a>
                 <a href="{{ route('kegiatan') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Kegiatan</a>
                 <a href="{{ route('program') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Program</a>
@@ -33,9 +34,11 @@
         <div id="menu" class="hidden md:hidden">
             <div class="absolute flex flex-col items-center self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md rounded-lg">
                 <a href="{{ route('home') }}" class="hover:text-green-600">Beranda</a>
+                <a href="{{ route('berita.index') }}" class="hover:text-green-600">Berita</a>
                 <a href="{{ route('profil') }}" class="hover:text-green-600">Profil</a>
                 <a href="{{ route('kegiatan') }}" class="hover:text-green-600">Kegiatan</a>
                 <a href="{{ route('program') }}" class="hover:text-green-600">Program</a>
+                <a href="{{ route('galeri') }}" class="hover:text-green-600">Galeri</a>
                 <a href="{{ route('ppdb') }}" class="hover:text-green-600">PPDB</a>
             </div>
         </div>

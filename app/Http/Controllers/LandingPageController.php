@@ -52,10 +52,33 @@ class LandingPageController extends Controller
     }
 
     // Halaman Galeri
-      public function galeri()
+    public function galeri()
     {
         // Ambil semua foto, urutkan dari yang terbaru
         $photos = Gallery::latest()->get(); 
         return view('galeri', compact('photos'));
     }
+
+    // Method untuk halaman daftar berita
+    public function beritaIndex()
+    {
+        $beritas = Berita::where('status', 'published')
+                        ->where('published_at', '<=', now()) // Hanya tampilkan yang sudah waktunya publish
+                        ->latest('published_at') // Urutkan dari yang terbaru
+                        ->paginate(6); // Tampilkan 6 berita per halaman
+
+        return view('berita-index', compact('beritas'));
+    }
+
+    // Method untuk halaman detail berita (menggunakan Route Model Binding)
+    public function beritaShow(Berita $berita)
+    {
+        // Pastikan hanya artikel yang sudah dipublikasikan yang bisa diakses
+        if ($berita->status !== 'published' || $berita->published_at > now()) {
+            abort(404);
+        }
+
+        return view('berita-show', compact('berita'));
+    }
+}
 }

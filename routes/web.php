@@ -13,3 +13,5 @@ Route::get('/kegiatan', [LandingPageController::class, 'kegiatan'])->name('kegia
 Route::get('/program', [LandingPageController::class, 'program'])->name('program');
 Route::get('/galeri', [LandingPageController::class, 'galeri'])->name('galeri');
 Route::get('/ppdb', [LandingPageController::class, 'ppdb'])->name('ppdb');
+Route::get('/berita', [LandingPageController::class, 'beritaIndex'])->name('berita.index');
+Route::get('/berita/{berita:slug}', [LandingPageController::class, 'beritaShow'])->name('berita.show');
