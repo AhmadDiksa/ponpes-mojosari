@@ -2,30 +2,58 @@
 
 @section('content')
 
-{{-- 1. Hero Section --}}
-<section class="relative h-[calc(100vh-80px)] bg-cover bg-center flex items-center justify-center text-white" style="background-image: url('{{ asset('images/hero-background.jpg') }}');">
-    {{-- Overlay Gelap --}}
-    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
-    
-    <div class="relative container mx-auto px-6 text-center z-10">
-        <div data-aos="fade-up" data-aos-duration="1000">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight text-shadow-lg">
-                Pondok Pesantren Mojosari
-            </h1>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
-                Mencetak Generasi Qur'ani yang Berakhlakul Karimah, Cerdas, dan Berwawasan Kebangsaan.
-            </p>
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('ppdb') }}" class="w-full sm:w-auto inline-block bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105">
-                    Daftar Sekarang
-                </a>
-                <a href="{{ route('profil') }}" class="w-full sm:w-auto inline-block bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold hover:bg-white/30 transition-all duration-300">
-                    Kenali Kami Lebih Dekat
-                </a>
+{{-- =============================================== --}}
+{{-- HERO SLIDER --}}
+{{-- =============================================== --}}
+<section class="relative h-[calc(100vh-80px)] w-full">
+    <!-- Swiper -->
+    <div class="swiper hero-slider h-full w-full">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('{{ asset('images/hero1.png') }}');">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('{{ asset('images/hero2.png') }}');">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('{{ asset('images/hero3.png') }}');">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+            </div>
+        </div>
+        <!-- Tombol Navigasi (Opsional) -->
+        <!-- <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div> -->
+        <!-- Paginasi (Titik-titik di bawah) -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Konten Teks di Atas Slider -->
+    <div class="absolute inset-0 flex items-center justify-center z-10">
+        <div class="relative container mx-auto px-6 text-center text-white">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight text-shadow-lg">
+                    Pondok Pesantren Mojosari
+                </h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
+                    Mencetak Generasi Qur'ani yang Berakhlakul Karimah, Cerdas, dan Berwawasan Kebangsaan.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="{{ route('ppdb.index') }}" class="w-full sm:w-auto inline-block bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105">
+                        Daftar Sekarang
+                    </a>
+                    <a href="{{ route('profil') }}" class="w-full sm:w-auto inline-block bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold hover:bg-white/30 transition-all duration-300">
+                        Kenali Kami Lebih Dekat
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
+{{-- =============================================== --}}
+{{-- AKHIR HERO SLIDER --}}
+{{-- =============================================== --}}
 
 {{-- 2. Section Sambutan / Tentang Kami (Singkat) --}}
 <section class="bg-white py-20">
@@ -98,7 +126,7 @@
             <p class="max-w-2xl mx-auto mt-4 text-green-200">
                 Bergabunglah dengan ribuan santri lainnya untuk menimba ilmu dan meraih masa depan yang gemilang bersama Pondok Pesantren Mojosari.
             </p>
-            <a href="{{ route('ppdb') }}" class="mt-8 inline-block bg-white text-green-700 px-8 py-3 rounded-full font-bold hover:bg-green-100 transition-all duration-300 shadow-lg transform hover:scale-105">
+            <a href="{{ route('ppdb.index') }}" class="mt-8 inline-block bg-white text-green-700 px-8 py-3 rounded-full font-bold hover:bg-green-100 transition-all duration-300 shadow-lg transform hover:scale-105">
                 Lihat Prosedur Pendaftaran
             </a>
         </div>
@@ -110,7 +138,18 @@
 @push('styles')
 <style>
     .text-shadow-lg {
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    /* Kustomisasi Paginasi Swiper */
+    .hero-slider .swiper-pagination-bullet {
+        background-color: white;
+        width: 10px;
+        height: 10px;
+        opacity: 0.7;
+    }
+    .hero-slider .swiper-pagination-bullet-active {
+        background-color: #16a34a; /* Warna hijau */
+        opacity: 1;
     }
 </style>
 @endpush

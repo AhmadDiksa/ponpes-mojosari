@@ -95,11 +95,17 @@ class LandingPageController extends Controller
 
 
     // Halaman PPDB
-    public function ppdb()
+    public function ppdbIndex()
     {
-        // Ambil semua data PPDB
-        $ppdbInfos = PpdbInfo::all()->groupBy('kategori');
+        $ppdbInfos = \App\Models\PpdbInfo::all()->groupBy('kategori');
         return view('ppdb', ['ppdbInfos' => $ppdbInfos]);
+    }
+
+
+    // Halaman khusus untuk formulir pendaftaran PPDB
+       public function ppdbDaftar()
+    {
+        return view('ppdb-daftar');
     }
 
     // Halaman Galeri

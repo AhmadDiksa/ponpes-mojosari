@@ -31,7 +31,10 @@ Route::get('/profil', [LandingPageController::class, 'profil'])->name('profil');
 Route::get('/kegiatan', [LandingPageController::class, 'kegiatan'])->name('kegiatan');
 
 // Halaman Penerimaan Santri Baru (PPDB)
-Route::get('/ppdb', [LandingPageController::class, 'ppdb'])->name('ppdb');
+Route::get('/ppdb', [LandingPageController::class, 'ppdbIndex'])->name('ppdb.index');
+
+// ROUTE BARU: Halaman khusus untuk menampilkan formulir pendaftaran
+Route::get('/ppdb/daftar', [LandingPageController::class, 'ppdbDaftar'])->name('ppdb.daftar');
 
 
 // =========================================================================

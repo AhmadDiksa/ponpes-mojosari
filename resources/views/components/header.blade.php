@@ -44,7 +44,7 @@
                 <a href="{{ route('kegiatan') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Kegiatan</a>
                 <a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Galeri</a>
                 <a href="{{ route('berita.index') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Berita</a>
-                <a href="{{ route('ppdb') }}" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-all duration-300 shadow">PPDB</a>
+                <a href="{{ route('ppdb.index') }}" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-all duration-300 shadow">PPDB</a>
             </div>
 
             {{-- Tombol Hamburger (Hanya terlihat di mobile) --}}
@@ -63,7 +63,7 @@
                     <a href="{{ route('kegiatan') }}" class="hover:text-green-600">Kegiatan</a>
                     <a href="{{ route('galeri') }}" class="hover:text-green-600">Galeri</a>
                     <a href="{{ route('berita.index') }}" class="hover:text-green-600">Berita</a>
-                    <a href="{{ route('ppdb') }}" class="hover:text-green-600">PPDB</a>
+                    <a href="{{ route('ppdb.index') }}" class="hover:text-green-600">PPDB</a>
                 </div>
             </div>
         </div>
