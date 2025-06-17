@@ -9,11 +9,14 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-// Import komponen
+// Import komponen Form dan Table
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter; // <-- Import untuk filter
 
 class JadwalKegiatanResource extends Resource
 {
@@ -22,7 +25,6 @@ class JadwalKegiatanResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-clock';
     protected static ?string $navigationLabel = 'Jadwal Kegiatan';
     protected static ?string $modelLabel = 'Jadwal Kegiatan';
-
 
     public static function form(Form $form): Form
     {
@@ -54,7 +56,6 @@ class JadwalKegiatanResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            // Mengurutkan jadwal berdasarkan kolom 'urutan' secara default
             ->defaultSort('urutan', 'asc')
             ->columns([
                 TextColumn::make('urutan')
@@ -76,7 +77,15 @@ class JadwalKegiatanResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                //
+                // ===============================================
+                // FILTER BERDASARKAN TIPE DITAMBAHKAN DI SINI
+                // ===============================================
+                SelectFilter::make('tipe')
+                    ->label('Filter Berdasarkan Tipe')
+                    ->options([
+                        'harian' => 'Harian',
+                        'tambahan' => 'Tambahan',
+                    ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -87,6 +96,13 @@ class JadwalKegiatanResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+    
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
     }
     
     public static function getPages(): array

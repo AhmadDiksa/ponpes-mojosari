@@ -20,7 +20,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
 
 class BeritaResource extends Resource
 {
@@ -33,33 +32,38 @@ class BeritaResource extends Resource
     {
         return $form
             ->schema([
-                // Kolom utama untuk konten
                 Section::make('Konten Utama')
                     ->schema([
                         TextInput::make('title')
                             ->label('Judul')
                             ->required()
                             ->maxLength(255)
-                            ->live(onBlur: true) // Mengaktifkan mode live, update saat fokus hilang
+                            ->live(onBlur: true)
                             ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', Str::slug($state))),
                         
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(Berita::class, 'slug', ignoreRecord: true), // Slug harus unik
+                            ->unique(Berita::class, 'slug', ignoreRecord: true),
 
+                        // RichEditor dengan tombol gambar yang dinonaktifkan
                         RichEditor::make('content')
                             ->label('Isi Berita')
                             ->required()
-                            ->columnSpanFull(), // Mengambil lebar penuh
+                            ->columnSpanFull()
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                                'image',
+                            ]),
                     ])->columns(2),
 
-                // Kolom sidebar untuk metadata
                 Section::make('Metadata')
                     ->schema([
                         FileUpload::make('thumbnail')
+                            ->label('Gambar Utama (Thumbnail)')
                             ->image()
-                            ->directory('berita-thumbnails'),
+                            ->directory('berita-thumbnails')
+                            ->imageEditor(),
                         
                         DateTimePicker::make('published_at')
                             ->label('Tanggal Publikasi')
@@ -77,7 +81,7 @@ class BeritaResource extends Resource
                             ->label('Penulis')
                             ->relationship('author', 'name')
                             ->searchable()
-                            ->default(auth()->id()) // Otomatis memilih user yang sedang login
+                            ->default(auth()->id())
                             ->required(),
                     ])
             ]);
