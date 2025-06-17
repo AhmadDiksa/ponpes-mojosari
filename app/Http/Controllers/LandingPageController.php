@@ -145,10 +145,15 @@ class LandingPageController extends Controller
         $pendaftaran->tahun_pendaftaran = $currentYear;
         $pendaftaran->save();
 
-        // 4. Redirect dengan Pesan Sukses
-        $successMessage = "Pendaftaran untuk ananda <strong>" . e($pendaftaran->nama_santri) . "</strong> berhasil dikirim. <br>Nomor Pendaftaran Anda adalah: <strong>" . $pendaftaran->tahun_pendaftaran . "-" . str_pad($pendaftaran->no_pendaftaran, 4, '0', STR_PAD_LEFT) . "</strong>. <br>Silakan simpan nomor ini untuk konfirmasi lebih lanjut.";
-        
-        return redirect()->route('ppdb.daftar')->with('success', $successMessage);
+        // Redirect ke halaman sukses dengan membawa ID pendaftaran
+        return redirect()->route('ppdb.success', ['pendaftaran' => $pendaftaran->id]);
+    }
+
+
+    public function ppdbSuccess(Pendaftaran $pendaftaran)
+    {
+        // Tampilkan view 'ppdb-success' dengan data pendaftaran yang sesuai
+        return view('ppdb-success', compact('pendaftaran'));
     }
 
     // Halaman Galeri
