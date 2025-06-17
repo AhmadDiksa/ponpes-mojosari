@@ -9,20 +9,25 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-// Import komponen form yang akan kita gunakan
+// Import semua komponen Form dan Table yang kita butuhkan
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Columns\TextColumn;
 
 class PageContentResource extends Resource
 {
     protected static ?string $model = PageContent::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationLabel = 'Konten Halaman';
+    protected static ?string $navigationLabel = 'Konten Halaman Statis';
     protected static ?string $modelLabel = 'Konten Halaman';
-
+    protected static ?string $pluralModelLabel = 'Konten Halaman Statis';
+    protected static ?int $navigationSort = 4; // Mengatur urutan di sidebar navigasi
 
     public static function form(Form $form): Form
     {
@@ -33,13 +38,16 @@ class PageContentResource extends Resource
                     ->options([
                         'visi' => 'Visi',
                         'misi' => 'Misi',
-                        'larangan' => 'Larangan',
+                        'larangan' => 'Tata Tertib & Larangan',
+                        'sejarah' => 'Sejarah',
                     ])
                     ->required()
                     // Mencegah duplikasi section (hanya boleh ada 1 Visi, 1 Misi, dst)
-                    ->unique(ignoreRecord: true),
+                    ->unique(ignoreRecord: true)
+                    // Membuat form reaktif terhadap perubahan field ini
+                    ->reactive(),
 
-                // Repeater adalah komponen terbaik untuk list dinamis
+                // Gunakan Repeater untuk Visi, Misi, Larangan
                 Repeater::make('content')
                     ->label('Daftar Konten')
                     ->schema([
@@ -48,25 +56,38 @@ class PageContentResource extends Resource
                             ->required(),
                     ])
                     ->addActionLabel('Tambah Item')
-                    // Kita perlu mengubah format data agar sesuai dengan model kita
-                    ->mutateDehydratedStateUsing(function ($state): string {
+                    // Fungsi ini dijalankan SEBELUM data disimpan ke DB
+                    ->mutateDehydratedStateUsing(function ($state): ?string {
+                        if (empty($state)) {
+                            return null;
+                        }
                         // Mengubah array of arrays menjadi array of strings
                         // Dari: [['item' => 'Teks 1'], ['item' => 'Teks 2']]
                         // Menjadi: ['Teks 1', 'Teks 2'] -> lalu di-encode ke JSON
                         $items = array_column($state, 'item');
                         return json_encode($items);
                     })
-                    ->mutateStateUsing(function (?string $state): array {
-                        // Mengubah JSON string dari DB menjadi format yang dimengerti Repeater
+                    // Fungsi ini dijalankan SAAT data dimuat dari DB ke form
+                    ->mutateLoadedStateUsing(function (?string $state): array {
                         if (empty($state)) {
                             return [];
                         }
+                        // Mengubah JSON string dari DB menjadi format yang dimengerti Repeater
                         // Dari: '["Teks 1", "Teks 2"]'
                         // Menjadi: [['item' => 'Teks 1'], ['item' => 'Teks 2']]
-                        $items = json_decode($state, true);
+                        $items = json_decode($state, true) ?: []; // Handle jika json_decode gagal
                         return array_map(fn ($item) => ['item' => $item], $items);
                     })
-                    ->required(),
+                    // Tampilkan field ini HANYA jika 'section_name' adalah visi, misi, atau larangan
+                    ->visible(fn (callable $get) => in_array($get('section_name'), ['visi', 'misi', 'larangan'])),
+
+                // Gunakan RichEditor untuk Sejarah
+                RichEditor::make('content')
+                    ->label('Konten Sejarah')
+                    ->required()
+                    ->columnSpanFull() // Mengambil lebar penuh
+                    // Tampilkan field ini HANYA jika 'section_name' adalah 'sejarah'
+                    ->visible(fn (callable $get) => $get('section_name') === 'sejarah'),
             ]);
     }
 
@@ -74,10 +95,36 @@ class PageContentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('section_name')
+                TextColumn::make('section_name')
                     ->label('Bagian Halaman')
-                    ->badge() // Membuatnya terlihat seperti badge/label
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'visi' => 'Visi',
+                        'misi' => 'Misi',
+                        'larangan' => 'Tata Tertib & Larangan',
+                        'sejarah' => 'Sejarah',
+                        default => $state,
+                    })
                     ->searchable(),
+                
+                TextColumn::make('content')
+                    ->label('Ringkasan Konten')
+                    ->limit(70)
+                    ->formatStateUsing(function (string $state): string {
+                        // Cek apakah konten adalah JSON atau HTML biasa
+                        $decoded = json_decode($state);
+                        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                            // Jika JSON, gabungkan item pertama
+                            return count($decoded) . ' item (Contoh: ' . ($decoded[0] ?? '') . '...)';
+                        }
+                        // Jika bukan JSON (HTML dari RichEditor), strip tags dan tampilkan
+                        return strip_tags($state);
+                    }),
+
+                TextColumn::make('updated_at')
+                    ->label('Terakhir Diubah')
+                    ->dateTime('d M Y')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -86,10 +133,18 @@ class PageContentResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Bulk actions dinonaktifkan karena setiap section unik
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
+    }
+    
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
     }
     
     public static function getPages(): array

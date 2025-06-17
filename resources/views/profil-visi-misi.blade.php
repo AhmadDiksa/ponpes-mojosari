@@ -27,21 +27,6 @@
                     @endif
                 </div>
 
-                <div data-aos="fade-right" data-aos-delay="200">
-                    <h3 class="text-2xl font-semibold mb-4 text-red-700">Larangan</h3>
-                     @if($larangan && !empty(json_decode($larangan->content)))
-                        <ul class="space-y-3 text-gray-600">
-                            @foreach(json_decode($larangan->content) as $item)
-                                <li class="flex items-start">
-                                     <svg class="w-5 h-5 mr-3 text-red-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    <span>{{ $item }}</span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-gray-500">Data larangan belum tersedia.</p>
-                    @endif
-                </div>
             </div>
 
             {{-- Kolom Kanan --}}

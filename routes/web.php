@@ -24,8 +24,11 @@ use App\Http\Controllers\LandingPageController;
 // Halaman Utama (Beranda)
 Route::get('/', [LandingPageController::class, 'home'])->name('home');
 
-// Halaman Profil (Visi, Misi, Larangan)
+// Route Profile
 Route::get('/profil', [LandingPageController::class, 'profil'])->name('profil');
+Route::get('/profil/visi-misi', [LandingPageController::class, 'visiMisi'])->name('profil.visi-misi');
+Route::get('/profil/sejarah', [LandingPageController::class, 'sejarah'])->name('profil.sejarah');
+Route::get('/profil/larangan', [LandingPageController::class, 'larangan'])->name('profil.larangan');
 
 // Halaman Jadwal Kegiatan
 Route::get('/kegiatan', [LandingPageController::class, 'kegiatan'])->name('kegiatan');
@@ -59,8 +62,9 @@ Route::get('/program/{programPendidikan:slug}', [LandingPageController::class, '
 
 
 // --- Rute untuk Galeri Foto ---
-// Halaman daftar semua foto di galeri dengan paginasi
-Route::get('/galeri', [LandingPageController::class, 'galeri'])->name('galeri');
+Route::get('/galeri', [LandingPageController::class, 'albumIndex'])->name('galeri.index');
+Route::get('/galeri/album/{album:slug}', [LandingPageController::class, 'albumShow'])->name('album.show');
+
 
 
 // --- Rute untuk Berita & Artikel ---

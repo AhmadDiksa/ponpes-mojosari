@@ -37,7 +37,26 @@
                     @endforeach
                 @else
                     <a href="{{ route('home') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Beranda</a>
-                    <a href="{{ route('profil') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Profil</a>
+                    {{-- Dropdown Profil --}}
+                    <div x-data="{ dropdownOpen: false }" class="relative">
+                        <button @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="flex items-center text-gray-600 hover:text-green-600 transition-colors duration-300">
+                            <span>Profil</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <div x-show="dropdownOpen" 
+                            x-transition
+                            class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-20 overflow-hidden"
+                            style="display: none;">
+                            
+                            <a href="{{ route('profil.visi-misi') }}" class="block px-4 py-3 text-gray-800 hover:bg-green-50 transition-colors">Visi & Misi</a>
+                            <a href="{{ route('profil.sejarah') }}" class="block px-4 py-3 text-gray-800 hover:bg-green-50 transition-colors">Sejarah</a>
+                            <a href="{{ route('profil.larangan') }}" class="block px-4 py-3 text-gray-800 hover:bg-green-50 transition-colors">Tata Tertib & Larangan</a>
+                        </div>
+                    </div>
+                    {{-- Akhir Dropdown --}}
+
+
                     {{-- Dropdown Program --}}
                     <div x-data="{ dropdownOpen: false }" class="relative">
                         <button @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="flex items-center text-gray-600 hover:text-green-600 transition-colors duration-300">
@@ -63,9 +82,41 @@
                         </div>
                     </div>
                     <a href="{{ route('kegiatan') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Kegiatan</a>
-                    <a href="{{ route('galeri') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Galeri</a>
+                    <a href="{{ route('galeri.index') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Galeri</a>
                     <a href="{{ route('berita.index') }}" class="text-gray-600 hover:text-green-600 transition-colors duration-300">Berita</a>
-                    <a href="{{ route('ppdb.index') }}" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-all duration-300 shadow">PPDB</a>
+                    {{-- =============================================== --}}
+                    {{-- DROPDOWN BARU UNTUK PPDB --}}
+                    {{-- =============================================== --}}
+                    <div x-data="{ dropdownOpen: false }" class="relative">
+                        <button @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-all duration-300 shadow flex items-center">
+                            <span>PPDB</span>
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        
+                        <div x-show="dropdownOpen" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform -translate-y-2"
+                            x-transition:enter-end="opacity-100 transform translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 transform translate-y-0"
+                            x-transition:leave-end="opacity-0 transform -translate-y-2"
+                            class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-20 overflow-hidden"
+                            style="display: none;">
+                            
+                            <a href="{{ route('ppdb.index') }}" class="block px-4 py-3 text-gray-800 hover:bg-green-50 transition-colors">
+                                <span class="font-semibold">Informasi Pendaftaran</span>
+                                <span class="block text-xs text-gray-500">Syarat, biaya, dan alur pendaftaran.</span>
+                            </a>
+                            <div class="border-t border-gray-200"></div>
+                            <a href="{{ route('ppdb.daftar') }}" class="block px-4 py-3 text-gray-800 hover:bg-green-50 transition-colors">
+                                <span class="font-semibold">Formulir Pendaftaran</span>
+                                <span class="block text-xs text-gray-500">Isi data untuk mendaftar online.</span>
+                            </a>
+                        </div>
+                    </div>
+                    {{-- =============================================== --}}
+                    {{-- AKHIR DROPDOWN PPDB --}}
+                    {{-- =============================================== --}}
                 @endif
             </div>
 
@@ -83,9 +134,10 @@
                     <a href="{{ route('profil') }}" class="hover:text-green-600">Profil</a>
                     <a href="{{ route('program.hub') }}" class="hover:text-green-600">Program</a>
                     <a href="{{ route('kegiatan') }}" class="hover:text-green-600">Kegiatan</a>
-                    <a href="{{ route('galeri') }}" class="hover:text-green-600">Galeri</a>
+                    <a href="{{ route('galeri.index') }}" class="hover:text-green-600">Galeri</a>
                     <a href="{{ route('berita.index') }}" class="hover:text-green-600">Berita</a>
-                    <a href="{{ route('ppdb.index') }}" class="hover:text-green-600">PPDB</a>
+                    <a href="{{ route('ppdb.index') }}" class="hover:text-green-600">Informasi PPDB</a>
+                    <a href="{{ route('ppdb.daftar') }}" class="hover:text-green-600">Daftar Online</a>
                 </div>
             </div>
         </div>

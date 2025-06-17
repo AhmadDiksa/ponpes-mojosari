@@ -11,6 +11,7 @@ use App\Models\ProgramPendidikan;
 use App\Models\Gallery;
 use App\Models\Berita;
 use App\Models\Pendaftaran;
+use App\Models\Album;
 
 
 class LandingPageController extends Controller
@@ -22,13 +23,33 @@ class LandingPageController extends Controller
         return view('home'); 
     }
 
-    // Halaman Profil
+    // Halaman Profil Utama
     public function profil()
+    {
+        return view('profil');
+    }
+
+    // Halaman Profil
+    public function visiMisi()
     {
         $visi = PageContent::where('section_name', 'visi')->first();
         $misi = PageContent::where('section_name', 'misi')->first();
+        // Kirim hanya Visi dan Misi ke view baru
+        return view('profil-visi-misi', compact('visi', 'misi'));
+    }
+
+    // METHOD untuk Sejarah
+    public function sejarah()
+    {
+        $sejarah = PageContent::where('section_name', 'sejarah')->first();
+        return view('profil-sejarah', compact('sejarah'));
+    }
+
+    // METHOD untuk Larangan
+    public function larangan()
+    {
         $larangan = PageContent::where('section_name', 'larangan')->first();
-        return view('profil', compact('visi', 'misi', 'larangan'));
+        return view('profil-larangan', compact('larangan'));
     }
 
     // Halaman Kegiatan
@@ -157,11 +178,19 @@ class LandingPageController extends Controller
     }
 
     // Halaman Galeri
-    public function galeri()
+    public function albumIndex()
     {
-        // Ambil semua foto, urutkan dari yang terbaru
-        $photos = Gallery::latest()->paginate(12); 
-        return view('galeri', compact('photos'));
+        // Ambil semua album, beserta jumlah foto di dalamnya
+        $albums = Album::withCount('photos')->latest()->paginate(9);
+        return view('album-index', compact('albums'));
+    }
+    
+    // Method BARU untuk menampilkan isi album
+    public function albumShow(Album $album)
+    {
+        // Load foto-foto yang berelasi dengan album ini
+        $photos = $album->photos()->latest()->paginate(12);
+        return view('album-show', compact('album', 'photos'));
     }
 
     // Method untuk halaman daftar berita

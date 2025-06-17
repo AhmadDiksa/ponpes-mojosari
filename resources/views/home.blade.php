@@ -43,7 +43,7 @@
                     <a href="{{ route('ppdb.index') }}" class="w-full sm:w-auto inline-block bg-green-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105">
                         Daftar Sekarang
                     </a>
-                    <a href="{{ route('profil') }}" class="w-full sm:w-auto inline-block bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold hover:bg-white/30 transition-all duration-300">
+                    <a href="{{ route('profil.visi-misi') }}" class="w-full sm:w-auto inline-block bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-full font-semibold hover:bg-white/30 transition-all duration-300">
                         Kenali Kami Lebih Dekat
                     </a>
                 </div>
@@ -68,7 +68,7 @@
                 <p class="text-gray-600 leading-relaxed">
                     Di Pondok Pesantren Mojosari, kami berkomitmen untuk menyediakan lingkungan pendidikan yang kondusif, di mana para santri tidak hanya mendalami ilmu agama, tetapi juga dibekali dengan pengetahuan umum dan keterampilan teknologi. Visi kami adalah membentuk lulusan yang siap menghadapi tantangan zaman dengan iman yang kokoh dan akhlak yang mulia.
                 </p>
-                <a href="{{ route('profil') }}" class="mt-6 inline-flex items-center text-green-600 font-semibold hover:underline">
+                <a href="{{ route('profil.visi-misi') }}" class="mt-6 inline-flex items-center text-green-600 font-semibold hover:underline">
                     Lihat Visi & Misi Kami
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
