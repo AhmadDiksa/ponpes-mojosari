@@ -33,8 +33,14 @@ Route::get('/kegiatan', [LandingPageController::class, 'kegiatan'])->name('kegia
 // Halaman Penerimaan Santri Baru (PPDB)
 Route::get('/ppdb', [LandingPageController::class, 'ppdbIndex'])->name('ppdb.index');
 
-// ROUTE BARU: Halaman khusus untuk menampilkan formulir pendaftaran
+// Route untuk menampilkan formulir
 Route::get('/ppdb/daftar', [LandingPageController::class, 'ppdbDaftar'])->name('ppdb.daftar');
+
+// Route untuk memproses formulir
+Route::post('/ppdb/daftar', [LandingPageController::class, 'ppdbStore'])->name('ppdb.store');
+
+// ROUTE Halaman sukses setelah pendaftaran
+Route::get('/ppdb/sukses/{pendaftaran}', [LandingPageController::class, 'ppdbSuccess'])->name('ppdb.success');
 
 
 // =========================================================================

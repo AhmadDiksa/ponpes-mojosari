@@ -102,6 +102,10 @@
     </script>
 
     {{-- Alpine.js --}}
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"> 
+//     let elemen = document.getElementsByClassName("tes");
+
+// // Contoh akses elemen pertama
+// console.log(elemen[0]);</script>
 </body>
 </html>

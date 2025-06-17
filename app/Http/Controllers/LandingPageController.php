@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\JadwalKegiatan;
 use App\Models\PageContent;
 use App\Models\PpdbInfo;
 use App\Models\ProgramPendidikan;
 use App\Models\Gallery;
 use App\Models\Berita;
+use App\Models\Pendaftaran;
+
 
 class LandingPageController extends Controller
 {
@@ -103,9 +107,48 @@ class LandingPageController extends Controller
 
 
     // Halaman khusus untuk formulir pendaftaran PPDB
-       public function ppdbDaftar()
+    public function ppdbDaftar()
     {
         return view('ppdb-daftar');
+    }
+
+    public function ppdbStore(Request $request)
+    {
+        // 1. Validasi Input
+        $validated = $request->validate([
+            'nama_santri' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tgl_lahir' => 'required|date',
+            'nama_ayah' => 'required|string|max:255',
+            'nama_ibu' => 'required|string|max:255',
+            'pekerjaan_ayah' => 'required|string|max:255',
+            'pekerjaan_ibu' => 'required|string|max:255',
+            'nomor_telepon' => 'required|string|max:15',
+            'alamat_rumah' => 'required|string',
+        ]);
+
+        // 2. Logika Nomor Pendaftaran Otomatis
+        $currentYear = date('Y');
+        $lastRegistration = Pendaftaran::where('tahun_pendaftaran', $currentYear)
+                                       ->orderBy('no_pendaftaran', 'desc')
+                                       ->first();
+
+        if ($lastRegistration) {
+            $newRegistrationNumber = $lastRegistration->no_pendaftaran + 1;
+        } else {
+            $newRegistrationNumber = 1;
+        }
+
+        // 3. Simpan Data ke Database
+        $pendaftaran = new Pendaftaran($validated);
+        $pendaftaran->no_pendaftaran = $newRegistrationNumber;
+        $pendaftaran->tahun_pendaftaran = $currentYear;
+        $pendaftaran->save();
+
+        // 4. Redirect dengan Pesan Sukses
+        $successMessage = "Pendaftaran untuk ananda <strong>" . e($pendaftaran->nama_santri) . "</strong> berhasil dikirim. <br>Nomor Pendaftaran Anda adalah: <strong>" . $pendaftaran->tahun_pendaftaran . "-" . str_pad($pendaftaran->no_pendaftaran, 4, '0', STR_PAD_LEFT) . "</strong>. <br>Silakan simpan nomor ini untuk konfirmasi lebih lanjut.";
+        
+        return redirect()->route('ppdb.daftar')->with('success', $successMessage);
     }
 
     // Halaman Galeri

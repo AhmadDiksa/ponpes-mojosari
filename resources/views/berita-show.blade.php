@@ -18,7 +18,7 @@
             @endif
             
             {{-- Konten artikel akan dirender di sini --}}
-            <div class="prose prose-lg max-w-none prose-green" data-aos="fade-up" data-aos-delay="300">
+            <div class="prose prose-lg max-w-none prose-green tes"  data-aos="fade-up" data-aos-delay="300">
                 {!! $berita->content !!}
             </div>
         </article>

@@ -40,5 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             el: '.swiper-pagination',
             clickable: true,
         }
+
     });
 });
