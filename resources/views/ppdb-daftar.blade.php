@@ -15,9 +15,8 @@
 
         <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-2xl" data-aos="fade-up" data-aos-delay="200">
             
-            {{-- Menampilkan Pesan Sukses --}}
             @if(session('success'))
-                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-lg" role="alert">
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-8 rounded-lg" role="alert">
                     <p class="font-bold">Pendaftaran Berhasil!</p>
                     <p>{!! session('success') !!}</p>
                 </div>
@@ -25,60 +24,79 @@
 
             <form action="{{ route('ppdb.store') }}" method="POST">
                 @csrf
-                <div class="space-y-6">
+                <div class="space-y-8">
                     {{-- Data Diri Santri --}}
-                    <h3 class="text-xl font-semibold border-b pb-2 text-gray-700">A. Data Calon Santri</h3>
                     <div>
-                        <label for="nama_santri" class="block text-sm font-medium text-gray-700">Nama Lengkap Santri</label>
-                        <input type="text" name="nama_santri" id="nama_santri" value="{{ old('nama_santri') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                        @error('nama_santri')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" id="tempat_lahir" value="{{ old('tempat_lahir') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                            @error('tempat_lahir')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        <h3 class="text-xl font-semibold border-b pb-3 text-green-800 mb-6">A. Data Calon Santri</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="nama_santri" class="block text-sm font-medium text-gray-700">Nama Lengkap Santri</label>
+                                <input type="text" name="nama_santri" id="nama_santri" value="{{ old('nama_santri') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                @error('nama_santri')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+                                    <input type="text" name="tempat_lahir" id="tempat_lahir" value="{{ old('tempat_lahir') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                    <input type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="alamat_rumah" class="block text-sm font-medium text-gray-700">Alamat Rumah (Sesuai KK)</label>
+                                <textarea name="alamat_rumah" id="alamat_rumah" rows="3" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">{{ old('alamat_rumah') }}</textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                            <input type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                            @error('tgl_lahir')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-                        </div>
-                    </div>
-                    <div>
-                        <label for="alamat_rumah" class="block text-sm font-medium text-gray-700">Alamat Rumah (Sesuai KK)</label>
-                        <textarea name="alamat_rumah" id="alamat_rumah" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">{{ old('alamat_rumah') }}</textarea>
-                        @error('alamat_rumah')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
 
                     {{-- Data Orang Tua --}}
-                    <h3 class="text-xl font-semibold border-b pb-2 text-gray-700 mt-8">B. Data Orang Tua / Wali</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="nama_ayah" class="block text-sm font-medium text-gray-700">Nama Ayah</label>
-                            <input type="text" name="nama_ayah" id="nama_ayah" value="{{ old('nama_ayah') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="pekerjaan_ayah" class="block text-sm font-medium text-gray-700">Pekerjaan Ayah</label>
-                            <input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                        </div>
-                    </div>
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="nama_ibu" class="block text-sm font-medium text-gray-700">Nama Ibu</label>
-                            <input type="text" name="nama_ibu" id="nama_ibu" value="{{ old('nama_ibu') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="pekerjaan_ibu" class="block text-sm font-medium text-gray-700">Pekerjaan Ibu</label>
-                            <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
-                        </div>
-                    </div>
                     <div>
-                        <label for="nomor_telepon" class="block text-sm font-medium text-gray-700">Nomor Telepon / WhatsApp (Aktif)</label>
-                        <input type="tel" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" placeholder="Contoh: 081234567890">
-                        @error('nomor_telepon')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                        <h3 class="text-xl font-semibold border-b pb-3 text-gray-800 mb-6">B. Data Orang Tua / Wali</h3>
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="nama_ayah" class="block text-sm font-medium text-gray-700">Nama Ayah</label>
+                                    <input type="text" name="nama_ayah" id="nama_ayah" value="{{ old('nama_ayah') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="pekerjaan_ayah" class="block text-sm font-medium text-gray-700">Pekerjaan Ayah</label>
+                                    <input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="nama_ibu" class="block text-sm font-medium text-gray-700">Nama Ibu</label>
+                                    <input type="text" name="nama_ibu" id="nama_ibu" value="{{ old('nama_ibu') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="pekerjaan_ibu" class="block text-sm font-medium text-gray-700">Pekerjaan Ibu</label>
+                                    <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="nomor_telepon" class="block text-sm font-medium text-gray-700">Nomor Telepon / WhatsApp (Aktif)</label>
+                                <input type="tel" name="nomor_telepon" id="nomor_telepon" value="{{ old('nomor_telepon') }}" required class="mt-1 block w-full rounded-lg border-2 border-green-800 bg-white shadow-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 sm:text-sm placeholder-gray-400" placeholder="Contoh: 081234567890">
+                                @error('nomor_telepon')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="max-w-4xl mx-auto mt-12" data-aos="fade-up">
+                        <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Informasi Berkas Pendaftaran</h3>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-6 rounded-r-lg">
+                            <p class="font-semibold mb-2">Berkas-berkas berikut ini harap disiapkan dan dibawa saat melakukan daftar ulang di pondok:</p>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Fotokopi Kartu Keluarga (KK): 1 Lembar</li>
+                                <li>Fotokopi Akte Kelahiran: 1 Lembar</li>
+                                <li>Pas Foto Santri Ukuran 3x4 (Background Merah): 3 Lembar</li>
+                                <li>Pas Foto Mahram Ukuran 3x4: 2 Lembar</li>
+                                <li>Bukti Pembayaran Administrasi (jika sudah membayar via transfer)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
                     {{-- Tombol Submit --}}
                     <div class="pt-5">
                         <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300">
@@ -89,20 +107,6 @@
             </form>
         </div>
 
-        {{-- Keterangan Berkas --}}
-        <div class="max-w-4xl mx-auto mt-12" data-aos="fade-up">
-            <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Informasi Berkas Pendaftaran</h3>
-            <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-6 rounded-r-lg">
-                <p class="font-semibold mb-2">Berkas-berkas berikut ini harap disiapkan dan dibawa saat melakukan daftar ulang di pondok:</p>
-                <ul class="list-disc list-inside space-y-2">
-                    <li>Fotokopi Kartu Keluarga (KK): 1 Lembar</li>
-                    <li>Fotokopi Akte Kelahiran: 1 Lembar</li>
-                    <li>Pas Foto Santri Ukuran 3x4 (Background Merah): 3 Lembar</li>
-                    <li>Pas Foto Mahram Ukuran 3x4: 2 Lembar</li>
-                    <li>Bukti Pembayaran Administrasi (jika sudah membayar via transfer)</li>
-                </ul>
-            </div>
-        </div>
 
     </div>
 </div>
