@@ -104,7 +104,7 @@
             {{-- Kolom Kanan: Peta Lokasi --}}
             <div class="rounded-lg overflow-hidden shadow-xl" data-aos="fade-left">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7908.2415048580015!2d111.88508218619907!3d-7.670165336496151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e784d0ad1ef059b%3A0x583b707a9dc76a90!2sYayasan%20Al-Mardliyah%20Pondok%20Pesantren%20Mojosari!5e0!3m2!1sid!2sid!4v1750059023399!5m2!1sid!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.117152083033!2d111.8882896!3d-7.670552699999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e784ce4725b1bf9%3A0xcb4442b80877c117!2sPondok%20Pesantren%20Mojosari!5e0!3m2!1sid!2sid!4v1750170632992!5m2!1sid!2sid"
                     class="w-full h-full min-h-[300px] border-0"
                     allowfullscreen=""
                     loading="lazy"
