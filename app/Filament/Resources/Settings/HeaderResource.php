@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\Settings;
 
-use App\Filament\Resources\HeaderResource\Pages;
-use App\Filament\Resources\HeaderResource\RelationManagers;
+use App\Filament\Resources\Settings\HeaderResource\Pages;
+use App\Filament\Resources\Settings\HeaderResource\RelationManagers;
 use App\Models\Header;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -18,6 +18,12 @@ class HeaderResource extends Resource
     protected static ?string $model = Header::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    
+    protected static ?string $navigationGroup = 'Settings';
+    
+    protected static ?string $navigationLabel = 'Header';
+    
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {

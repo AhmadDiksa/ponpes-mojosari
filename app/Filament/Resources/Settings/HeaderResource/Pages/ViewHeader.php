@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\HeaderResource\Pages;
+namespace App\Filament\Resources\Settings\HeaderResource\Pages;
 
-use App\Filament\Resources\HeaderResource;
+use App\Filament\Resources\Settings\HeaderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 

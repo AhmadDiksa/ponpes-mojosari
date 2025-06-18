@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\Settings;
 
-use App\Filament\Resources\FooterResource\Pages;
-use App\Filament\Resources\FooterResource\RelationManagers;
+use App\Filament\Resources\Settings\FooterResource\Pages;
+use App\Filament\Resources\Settings\FooterResource\RelationManagers;
 use App\Models\Footer;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -18,6 +18,12 @@ class FooterResource extends Resource
     protected static ?string $model = Footer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    
+    protected static ?string $navigationGroup = 'Settings';
+    
+    protected static ?string $navigationLabel = 'Footer';
+    
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\FooterResource\Pages;
+namespace App\Filament\Resources\Settings\FooterResource\Pages;
 
-use App\Filament\Resources\FooterResource;
+use App\Filament\Resources\Settings\FooterResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
