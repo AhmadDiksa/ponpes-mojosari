@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\JadwalKegiatan;
 use App\Models\PageContent;
@@ -12,6 +13,7 @@ use App\Models\Gallery;
 use App\Models\Berita;
 use App\Models\Pendaftaran;
 use App\Models\Album;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class LandingPageController extends Controller
@@ -213,5 +215,18 @@ class LandingPageController extends Controller
         }
 
         return view('berita-show', compact('berita'));
+    }
+
+       // METHOD BARU UNTUK DOWNLOAD PDF
+    public function downloadFormulir(Pendaftaran $pendaftaran)
+    {
+        // Muat view PDF dengan data pendaftaran
+        $pdf = Pdf::loadView('pdf.formulir-pendaftaran', compact('pendaftaran'));
+        
+        // Nama file saat di-download
+        $fileName = 'Formulir_Pendaftaran_' . Str::slug($pendaftaran->nama_santri, '_') . '.pdf';
+        
+        // Download file PDF
+        return $pdf->download($fileName);
     }
 }

@@ -73,3 +73,6 @@ Route::get('/berita', [LandingPageController::class, 'beritaIndex'])->name('beri
 
 // Halaman detail untuk satu berita (menggunakan slug)
 Route::get('/berita/{berita:slug}', [LandingPageController::class, 'beritaShow'])->name('berita.show');
+
+// Route untuk mengunduh formulir pendaftaran
+Route::get('/ppdb/formulir/{pendaftaran}/download', [LandingPageController::class, 'downloadFormulir'])->name('ppdb.download');
