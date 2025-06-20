@@ -32,7 +32,7 @@ class HeaderResource extends Resource
                 Forms\Components\FileUpload::make('logo')
                     ->label('Logo')
                     ->image()
-                    ->directory('../header-logos')
+                    ->directory('header-logos')
                     ->nullable(),
                 Forms\Components\TextInput::make('title')
                     ->label('Judul')
