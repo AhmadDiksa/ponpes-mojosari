@@ -62,7 +62,7 @@ class BeritaResource extends Resource
                         FileUpload::make('thumbnail')
                             ->label('Gambar Utama (Thumbnail)')
                             ->image()
-                            ->directory('berita-thumbnails')
+                            ->directory('../berita-thumbnails')
                             ->imageEditor(),
                         
                         DateTimePicker::make('published_at')

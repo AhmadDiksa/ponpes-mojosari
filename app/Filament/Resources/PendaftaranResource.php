@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ppdb;
+namespace App\Filament\Resources;
 
-use App\Filament\Resources\ppdb\PendaftaranResource\Pages;
+use App\Filament\Resources\PendaftaranResource\Pages;
 use App\Models\Pendaftaran;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,12 +16,10 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Select;   
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Carbon\Carbon;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Columns\ImageColumn;
 
 class PendaftaranResource extends Resource
 {
@@ -30,7 +28,6 @@ class PendaftaranResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationLabel = 'Data Pendaftar';
     protected static ?string $modelLabel = 'Pendaftar';
-    protected static ?string $navigationGroup = 'PPDB';
 
     public static function form(Form $form): Form
     {
@@ -58,11 +55,6 @@ class PendaftaranResource extends Resource
                     TextInput::make('nama_santri')->required(),
                     TextInput::make('tempat_lahir')->required(),
                     DatePicker::make('tgl_lahir')->label('Tanggal Lahir')->required(),
-                    FileUpload::make('image_path')
-                        ->label('Foto')
-                        ->image()
-                        ->directory('pendaftar-foto')
-                        ->columnSpanFull(),
                     Textarea::make('alamat_rumah')->label('Alamat')->required()->columnSpanFull(),
                 ])->columns(2),
 
@@ -121,10 +113,6 @@ class PendaftaranResource extends Resource
                 TextColumn::make('nomor_telepon')
                     ->label('No. Telepon Wali')
                     ->searchable(),
-
-                ImageColumn::make('image_path')
-                    ->label('Foto')
-                    ->circular(),
 
                 TextColumn::make('created_at')
                     ->label('Tanggal Mendaftar')
