@@ -10,16 +10,19 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
-// Import komponen Form dan Table
+// Import semua komponen yang dibutuhkan
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select;   
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Carbon\Carbon;
+use Filament\Tables\Actions\Action; // Untuk aksi kustom (Download PDF)
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction; // Untuk ekspor item terpilih
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction; // Untuk tombol ekspor di header
 
 class PendaftaranResource extends Resource
 {
@@ -34,21 +37,9 @@ class PendaftaranResource extends Resource
         return $form
             ->schema([
                 Section::make('Informasi Pendaftaran')->schema([
-                    TextInput::make('no_pendaftaran')
-                        ->label('No. Pendaftaran')
-                        ->disabled()
-                        ->dehydrated(),
-                    TextInput::make('tahun_pendaftaran')
-                        ->label('Tahun')
-                        ->disabled()
-                        ->dehydrated(),
-                    Select::make('status')
-                        ->options([
-                            'pending' => 'Pending',
-                            'verified' => 'Terverifikasi',
-                            'rejected' => 'Ditolak',
-                        ])
-                        ->required(),
+                    TextInput::make('no_pendaftaran')->label('No. Pendaftaran')->disabled()->dehydrated(),
+                    TextInput::make('tahun_pendaftaran')->label('Tahun')->disabled()->dehydrated(),
+                    Select::make('status')->options(['pending' => 'Pending', 'verified' => 'Terverifikasi', 'rejected' => 'Ditolak',])->required(),
                 ])->columns(3),
 
                 Section::make('Data Calon Santri')->schema([
@@ -80,79 +71,53 @@ class PendaftaranResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), // Sembunyikan secara default
+                TextColumn::make('id')->label('ID')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('no_pendaftaran')
                     ->label('No. Daftar')
                     ->formatStateUsing(fn (Pendaftaran $record): string => 
                         $record->tahun_pendaftaran . '-' . str_pad($record->no_pendaftaran, 4, '0', STR_PAD_LEFT)
                     )
-                    ->searchable(
-                        query: function (Builder $query, string $search): Builder {
-                            return $query->where('no_pendaftaran', 'like', "%{$search}%")
-                                         ->orWhere('tahun_pendaftaran', 'like', "%{$search}%");
-                        }
-                    )
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where('no_pendaftaran', 'like', "%{$search}%")
+                                     ->orWhere('tahun_pendaftaran', 'like', "%{$search}%");
+                    })
                     ->sortable(),
                 
-                TextColumn::make('nama_santri')
-                    ->label('Nama Santri')
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'verified' => 'success',
-                        'rejected' => 'danger',
-                    }),
-                
-                TextColumn::make('nomor_telepon')
-                    ->label('No. Telepon Wali')
-                    ->searchable(),
-
-                TextColumn::make('created_at')
-                    ->label('Tanggal Mendaftar')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('nama_santri')->label('Nama Santri')->searchable()->sortable(),
+                TextColumn::make('status')->badge()->color(fn (string $state): string => match ($state) {
+                    'pending' => 'warning', 'verified' => 'success', 'rejected' => 'danger',
+                }),
+                TextColumn::make('nomor_telepon')->label('No. Telepon Wali')->searchable(),
+                TextColumn::make('created_at')->label('Tanggal Mendaftar')->dateTime('d M Y, H:i')->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                // FILTER BERDASARKAN TAHUN
                 SelectFilter::make('tahun_pendaftaran')
                     ->label('Filter Tahun')
-                    ->options(function (): array {
-                        // Ambil semua tahun unik dari tabel dan buat menjadi options
-                        return Pendaftaran::query()
-                            ->select('tahun_pendaftaran')
-                            ->distinct()
-                            ->orderBy('tahun_pendaftaran', 'desc')
-                            ->pluck('tahun_pendaftaran', 'tahun_pendaftaran')
-                            ->toArray();
-                    }),
-                
-                // FILTER BERDASARKAN STATUS
-                SelectFilter::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'verified' => 'Terverifikasi',
-                        'rejected' => 'Ditolak',
-                    ])
+                    ->options(fn (): array => Pendaftaran::query()->select('tahun_pendaftaran')->distinct()->orderBy('tahun_pendaftaran', 'desc')->pluck('tahun_pendaftaran', 'tahun_pendaftaran')->toArray()),
+                SelectFilter::make('status')->options(['pending' => 'Pending', 'verified' => 'Terverifikasi', 'rejected' => 'Ditolak']),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make(),
+                Action::make('download_pdf')
+                    ->label('PDF')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('info')
+                    ->url(fn (Pendaftaran $record): string => route('ppdb.download', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                ExportBulkAction::make()->label('Ekspor ke Excel (Terpilih)'),
+                Tables\Actions\DeleteBulkAction::make(),
             ])
-            ->defaultSort('created_at', 'desc'); // Urutkan berdasarkan pendaftar terbaru
+            ->headerActions([
+                Action::make('export')
+                    ->label('Download Semua Data (Excel)')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->url(route('export-pendaftaran'))
+                    ->openUrlInNewTab(),
+            ])
+            ->defaultSort('created_at', 'desc');
     }
     
     public static function getPages(): array

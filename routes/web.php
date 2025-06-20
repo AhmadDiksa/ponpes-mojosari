@@ -76,3 +76,10 @@ Route::get('/berita/{berita:slug}', [LandingPageController::class, 'beritaShow']
 
 // Route untuk mengunduh formulir pendaftaran
 Route::get('/ppdb/formulir/{pendaftaran}/download', [LandingPageController::class, 'downloadFormulir'])->name('ppdb.download');
+
+use App\Exports\PendaftaranExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+Route::get('/export-pendaftaran', function () {
+    return Excel::download(new PendaftaranExport, 'pendaftaran.xlsx');
+})->middleware('auth')->name('export-pendaftaran');
