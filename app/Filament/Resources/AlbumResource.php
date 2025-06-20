@@ -24,7 +24,7 @@ class AlbumResource extends Resource
                 ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', Str::slug($state))),
             Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
             Forms\Components\Textarea::make('description')->columnSpanFull(),
-            Forms\Components\FileUpload::make('cover_image')->image()->directory('../album-covers'),
+            Forms\Components\FileUpload::make('cover_image')->image()->directory('album-covers'),
         ]);
     }
 

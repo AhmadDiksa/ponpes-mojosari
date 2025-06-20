@@ -51,7 +51,7 @@ class ProgramPendidikanResource extends Resource
                 FileUpload::make('image')
                     ->label('Gambar Program')
                     ->image()
-                    ->directory('../program-images'),
+                    ->directory('program-images'),
             ]);
     }
 

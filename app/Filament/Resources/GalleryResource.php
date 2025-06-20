@@ -51,7 +51,7 @@ class GalleryResource extends Resource
                         FileUpload::make('image_path')
                             ->label('Upload Foto')
                             ->required()
-                            ->directory('../gallery-photos') // Menyimpan file di 'storage/app/gallery-photos'
+                            ->directory('gallery-photos') // Menyimpan file di 'storage/app/public/gallery-photos'
                             ->image() // Validasi dasar untuk gambar
                             ->imageEditor() // Aktifkan editor gambar (crop, rotate, dll)
                             ->maxSize(2048) // Batas ukuran file 2MB
