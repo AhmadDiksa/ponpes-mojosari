@@ -1,50 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Formulir Pendaftaran - {{ $pendaftaran->nama_santri }}</title>
     <style>
-        body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 12px;
-            color: #333;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header h3, .header h4 {
+        /* CSS Reset Sederhana */
+        body, h1, h2, h3, h4, h5, h6, p, table, tr, td {
             margin: 0;
             padding: 0;
+            border-spacing: 0;
         }
-        .header .address {
-            font-size: 11px;
+
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Font klasik untuk dokumen resmi */
+            font-size: 12px;
+            color: #000;
+        }
+
+        /* Styling Header */
+        .header-table {
+            width: 100%;
+            text-align: center;
             border-bottom: 2px solid #000;
             padding-bottom: 5px;
         }
+        .header-table td {
+            padding: 1px 0;
+        }
+        .header-title {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .header-subtitle {
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .header-address {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Styling Tabel Konten */
         .content-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
         .content-table td {
-            padding: 5px;
+            padding: 6px 4px; /* Sedikit padding agar tidak terlalu mepet */
             vertical-align: top;
         }
         .content-table .label {
             width: 30%;
         }
         .content-table .separator {
-            width: 5%;
-            text-align: center;
+            width: 2%;
         }
         .content-table .data {
-            width: 65%;
-            border-bottom: 1px dotted #000;
+            width: 68%;
+            border-bottom: 1px dotted #333;
+            min-height: 16px; /* Pastikan garis tetap terlihat */
+        }
+        .data:empty::before {
+             content: "\a0"; /* Spasi non-breaking untuk data kosong agar garis terlihat */
         }
         .nested-label {
             padding-left: 20px;
         }
+
+        /* Styling Tanda Tangan */
         .signature-section {
             margin-top: 60px;
             width: 100%;
@@ -52,6 +78,8 @@
         .signature-section td {
             text-align: center;
             width: 50%;
+            padding: 0 15px;
+            vertical-align: top;
         }
         .signature-name {
             margin-top: 60px;
@@ -61,11 +89,20 @@
 </head>
 <body>
 
-    <div class="header">
-        <h3>FORMULIR PENDAFTARAN SANTRI BARU</h3>
-        <h4>PONDOK PESANTREN PUTRI KH. BASTHOMI</h4>
-        <p class="address">PO BOX 02 LOCERET NGANJUK 64471 NO HP : 085855062194</p>
-    </div>
+    <table class="header-table">
+        <tr>
+            <td class="header-title">Formulir Pendaftaran Santri Baru</td>
+        </tr>
+        <tr>
+            <td class="header-subtitle">Pondok Pesantren Putri KH. Basthomi</td>
+        </tr>
+        <tr>
+            <td class="header-subtitle">Pondok Pesantren Mojosari</td>
+        </tr>
+        <tr>
+            <td class="header-address">PO BOX 02 LOCERET NGANJUK 64471 NO HP : 085855062194</td>
+        </tr>
+    </table>
 
     <table class="content-table">
         <tr>
@@ -86,7 +123,7 @@
         <tr>
             <td class="label">Tempat / Tgl. Lahir</td>
             <td class="separator">:</td>
-            <td class="data">{{ $pendaftaran->tempat_lahir }}, {{ $pendaftaran->tgl_lahir->format('d F Y') }}</td>
+            <td class="data">{{ $pendaftaran->tempat_lahir }}, {{ $pendaftaran->tgl_lahir->translatedFormat('d F Y') }}</td>
         </tr>
         <tr>
             <td class="label">Nama Orang Tua</td>
@@ -158,7 +195,7 @@
                 <p class="signature-name">( Ibu Nyai Hj. Mahmudah Basthomi )</p>
             </td>
             <td>
-                Mojosari, {{ date('d F Y') }}<br>
+                ............................, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
                 Pendaftar
                 <p class="signature-name">( ............................................ )</p>
             </td>
