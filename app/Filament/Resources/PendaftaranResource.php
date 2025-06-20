@@ -31,6 +31,7 @@ class PendaftaranResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-plus';
     protected static ?string $navigationLabel = 'Data Pendaftar';
     protected static ?string $modelLabel = 'Pendaftar';
+    protected static ?string $navigationGroup = 'PPDB';
 
     public static function form(Form $form): Form
     {
