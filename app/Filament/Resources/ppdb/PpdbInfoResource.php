@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\ppdb;
 
-use App\Filament\Resources\PpdbInfoResource\Pages;
+use App\Filament\Resources\ppdb\PpdbInfoResource\Pages;
 use App\Models\PpdbInfo;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -23,6 +23,7 @@ class PpdbInfoResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
     protected static ?string $navigationLabel = 'Info PPDB';
     protected static ?string $modelLabel = 'Info PPDB';
+    protected static ?string $navigationGroup = 'PPDB';
 
     public static function form(Form $form): Form
     {

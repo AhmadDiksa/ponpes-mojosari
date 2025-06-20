@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\PpdbInfoResource\Pages;
+namespace App\Filament\Resources\LaranganResource\Pages;
 
-use App\Filament\Resources\PpdbInfoResource;
+use App\Filament\Resources\LaranganResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditPpdbInfo extends EditRecord
+class EditLarangan extends EditRecord
 {
-    protected static string $resource = PpdbInfoResource::class;
+    protected static string $resource = LaranganResource::class;
 
     protected function getHeaderActions(): array
     {

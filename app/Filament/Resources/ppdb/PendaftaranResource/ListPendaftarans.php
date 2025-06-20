@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PendaftaranResource\Pages;
+namespace App\Filament\Resources\ppdb\PendaftaranResource\Pages;
 
-use App\Filament\Resources\PendaftaranResource;
+use App\Filament\Resources\ppdb\PendaftaranResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

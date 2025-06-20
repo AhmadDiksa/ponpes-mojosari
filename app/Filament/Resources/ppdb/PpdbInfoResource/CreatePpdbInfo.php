@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PpdbInfoResource\Pages;
+namespace App\Filament\Resources\ppdb\PpdbInfoResource\Pages;
 
-use App\Filament\Resources\PpdbInfoResource;
+use App\Filament\Resources\ppdb\PpdbInfoResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
