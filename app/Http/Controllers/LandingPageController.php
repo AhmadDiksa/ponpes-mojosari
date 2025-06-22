@@ -169,22 +169,8 @@ class LandingPageController extends Controller
                 'alamat_rumah' => 'required|string',
             ]);
 
-            // 2. Logika Nomor Pendaftaran Otomatis
-            $currentYear = date('Y');
-            $lastRegistration = Pendaftaran::where('tahun_pendaftaran', $currentYear)
-                                        ->orderBy('no_pendaftaran', 'desc')
-                                        ->first();
-
-            if ($lastRegistration) {
-                $newRegistrationNumber = $lastRegistration->no_pendaftaran + 1;
-            } else {
-                $newRegistrationNumber = 1;
-            }
-
-            // 3. Simpan Data ke Database
+            // 2. Simpan Data ke Database (nomor pendaftaran akan di-generate otomatis di model)
             $pendaftaran = new Pendaftaran($validated);
-            $pendaftaran->no_pendaftaran = $newRegistrationNumber;
-            $pendaftaran->tahun_pendaftaran = $currentYear;
             $pendaftaran->save();
 
             // Redirect ke halaman sukses dengan membawa ID pendaftaran

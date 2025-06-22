@@ -38,9 +38,22 @@ class PendaftaranResource extends Resource
         return $form
             ->schema([
                 Section::make('Informasi Pendaftaran')->schema([
-                    TextInput::make('no_pendaftaran')->label('No. Pendaftaran')->disabled()->dehydrated(),
-                    TextInput::make('tahun_pendaftaran')->label('Tahun')->disabled()->dehydrated(),
-                    Select::make('status')->options(['pending' => 'Pending', 'verified' => 'Terverifikasi', 'rejected' => 'Ditolak',])->required(),
+                    TextInput::make('no_pendaftaran')
+                        ->label('No. Pendaftaran')
+                        ->disabled()
+                        ->dehydrated()
+                        ->placeholder('Akan diisi otomatis')
+                        ->helperText('Nomor pendaftaran akan di-generate otomatis saat menyimpan'),
+                    TextInput::make('tahun_pendaftaran')
+                        ->label('Tahun')
+                        ->disabled()
+                        ->dehydrated()
+                        ->placeholder('Akan diisi otomatis')
+                        ->helperText('Tahun pendaftaran akan diisi otomatis'),
+                    Select::make('status')
+                        ->options(['pending' => 'Pending', 'verified' => 'Terverifikasi', 'rejected' => 'Ditolak'])
+                        ->required()
+                        ->default('pending'),
                 ])->columns(3),
 
                 Section::make('Data Calon Santri')->schema([
@@ -73,11 +86,8 @@ class PendaftaranResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('ID')->sortable()->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('no_pendaftaran')
+                TextColumn::make('formatted_nomor_pendaftaran')
                     ->label('No. Daftar')
-                    ->formatStateUsing(fn (Pendaftaran $record): string => 
-                        $record->tahun_pendaftaran . '-' . str_pad($record->no_pendaftaran, 4, '0', STR_PAD_LEFT)
-                    )
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         return $query->where('no_pendaftaran', 'like', "%{$search}%")
                                      ->orWhere('tahun_pendaftaran', 'like', "%{$search}%");

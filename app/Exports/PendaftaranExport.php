@@ -32,7 +32,11 @@ class PendaftaranExport implements FromCollection, WithHeadings
             'status',
             'created_at',
             'updated_at',
-        ])->get();
+        ])->get()->map(function ($pendaftaran) {
+            // Tambahkan kolom nomor pendaftaran yang sudah diformat
+            $pendaftaran->formatted_no_pendaftaran = $pendaftaran->formatted_nomor_pendaftaran;
+            return $pendaftaran;
+        });
     }
 
     public function headings(): array
@@ -58,6 +62,7 @@ class PendaftaranExport implements FromCollection, WithHeadings
             'Status',
             'Created At',
             'Updated At',
+            'Nomor Pendaftaran (Formatted)',
         ];
     }
 } 

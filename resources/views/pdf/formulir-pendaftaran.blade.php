@@ -111,9 +111,9 @@
             <td class="data"></td>
         </tr>
         <tr>
-            <td class="label">No Pendaftaran</td>
+            <td class="label">Nomor Pendaftaran</td>
             <td class="separator">:</td>
-            <td class="data">{{ $pendaftaran->tahun_pendaftaran }}-{{ str_pad($pendaftaran->no_pendaftaran, 4, '0', STR_PAD_LEFT) }}</td>
+            <td class="data">{{ $pendaftaran->formatted_nomor_pendaftaran }}</td>
         </tr>
         <tr>
             <td class="label">Nama Santri</td>

@@ -23,7 +23,7 @@
             <div class="mt-8 bg-green-50 border-2 border-dashed border-green-300 p-6 rounded-lg">
                 <p class="text-lg text-gray-700">Nomor Pendaftaran Anda adalah:</p>
                 <p class="text-4xl font-extrabold text-green-700 tracking-wider mt-2">
-                    {{ $pendaftaran->tahun_pendaftaran }}-{{ str_pad($pendaftaran->no_pendaftaran, 4, '0', STR_PAD_LEFT) }}
+                    {{ $pendaftaran->formatted_nomor_pendaftaran }}
                 </p>
                 <p class="text-sm text-gray-500 mt-3">
                     <strong>Penting:</strong> Mohon simpan dan catat nomor pendaftaran ini untuk keperluan konfirmasi dan daftar ulang.
