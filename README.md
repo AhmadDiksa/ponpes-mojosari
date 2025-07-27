@@ -2,6 +2,7 @@
 
 Website ini adalah sistem informasi dan portal resmi Pondok Pesantren Mojosari, dibangun menggunakan Laravel 12, Filament Admin, TailwindCSS, dan Vite. Website ini menyediakan informasi profil, program pendidikan, berita, galeri, serta pendaftaran santri baru (PPDB) secara online.
 
+Link Website: https://pesantrenputrikhbasthomi.com/
 ---
 
 ## Fitur Utama
